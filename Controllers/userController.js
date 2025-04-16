@@ -1,6 +1,12 @@
-function authenticate(req,res) {
+import {user_auth} from "../Models/userAuth.js"
+
+async function authenticate(req,res) {
     const body = req.body ;
     console.log(body);
+    await user_auth.create({
+        name : body.name,
+        password : body.password,
+    })
     home(res);
 }
 
