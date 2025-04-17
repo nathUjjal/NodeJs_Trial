@@ -1,24 +1,29 @@
 import {user_auth} from "../Models/userAuth.js"
 
-async function authenticate(req,res) {
+async function addUserSignUp(req,res) {
     const body = req.body ;
     console.log(body);
-    await user_auth.create({
+    const user = await user_auth.create({
         name : body.name,
         password : body.password,
-    })
+    });
+    console.log(user);
     home(res);
 }
 
 function login( _ ,res){
     res.render('login');
 }
+function signUp( _ ,res){
+    res.render('signup');
+}
 function home(res){
     res.render('home');
 }
 
 export const func = {
-    authenticate,
+    addUserSignUp,
     login,
+    signUp,
     home,
 }
