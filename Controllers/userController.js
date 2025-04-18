@@ -1,29 +1,44 @@
 import {user_auth} from "../Models/userAuth.js"
+import {v4} from "uuid" ;
+import { auth } from "../servce/auth.js";
 
 async function addUserSignUp(req,res) {
     const body = req.body ;
-    console.log(body);
+    //console.log(body);
     const user = await user_auth.create({
         name : body.name,
+        email : body.Email,
         password : body.password,
     });
     console.log(user);
-    home(res);
+    return res.render('home');
+}
+
+async function authenticate(req,res) {
+    const body = req.body ;
+    const user = await user_auth.findOne({
+        name : body.name,
+        password : body.password,
+    });
+    if(!user) return res.render('login');
+    const sessionId = v4();
+    //console.log(sessionId);
+    auth.setUser(sessionId,user);
+    res.cookie("uid",sessionId);
+    return res.redirect('/home');
 }
 
 function login( _ ,res){
-    res.render('login');
+    return res.render('login');
 }
 function signUp( _ ,res){
-    res.render('signup');
+    return res.render('signup');
 }
-function home(res){
-    res.render('home');
-}
+
 
 export const func = {
     addUserSignUp,
+    authenticate,
     login,
     signUp,
-    home,
 }
