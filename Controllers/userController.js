@@ -10,8 +10,8 @@ async function addUserSignUp(req,res) {
         email : body.Email,
         password : body.password,
     });
-    console.log(user);
-    return res.render('home');
+    //console.log(user);
+    return res.redirect('/home');
 }
 
 async function authenticate(req,res) {
