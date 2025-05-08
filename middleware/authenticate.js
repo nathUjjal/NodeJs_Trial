@@ -5,7 +5,7 @@ function restrictToLoggedInUser(req,res,next){
     if(!userId) return res.redirect("/login");
     const user = auth.getUser(userId);
     if(!user) return res.redirect("/login");
-
+    console.log(user);
     req.user = user ;
     next();
 }

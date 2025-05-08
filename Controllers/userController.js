@@ -21,10 +21,8 @@ async function authenticate(req,res) {
         password : body.password,
     });
     if(!user) return res.render('login');
-    const sessionId = v4();
-    //console.log(sessionId);
-    auth.setUser(sessionId,user);
-    res.cookie("uid",sessionId);
+    const token = auth.setUser(user);
+    res.cookie("uid",token);
     return res.redirect('/home');
 }
 

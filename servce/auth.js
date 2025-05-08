@@ -1,10 +1,14 @@
-const sessionIdToUser = new Map();
-function setUser(id,user){
-    sessionIdToUser.set(id,user);
-    //console.log(sessionIdToUser);
+import  jwt  from "jsonwebtoken";
+const secret = "$khelahobe$";
+
+function setUser(user){
+    return jwt.sign({
+        name : user.name,
+    },secret);
 }
-function getUser(id){
-    return sessionIdToUser.get(id);
+function getUser(token){
+    if(!token)return null;
+    return jwt.verify(token,secret);
 }
 
 export const auth = {
